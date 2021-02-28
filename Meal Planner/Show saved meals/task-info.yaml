@@ -1,0 +1,513 @@
+type: edu
+files:
+- name: src/mealplanner/Main.kt
+  visible: true
+  text: |-
+    package mealplanner
+
+    import mealplanner.Database
+    import com.squareup.sqldelight.db.SqlDriver
+    import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+
+    fun main() {
+        //mealplanner.UI.start()
+        val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        Database.Schema.create(driver)
+
+
+
+
+
+    }
+  learner_created: false
+- name: src/mealplanner/Meal.kt
+  visible: true
+  text: |+
+    package mealplanner
+
+    class Meal(private val category: Category, private val name: String, private val ingredients: List<String>) {
+
+
+        override fun toString(): String {
+
+            return "Category: $category\n" +
+                    "Name: $name\n" +
+                    ingredients.joinToString(
+                            "\n", "Ingredients: \n"
+                    )
+        }
+
+
+        enum class Category(val category: String) {
+            BREAKFAST("breakfast"), LUNCH("lunch"), DINNER("dinner");
+
+
+            override fun toString(): String {
+                return category
+            }
+
+            companion object {
+                val categoriesString: String = Category.values()
+                        .map(Category::category)
+                        .joinToString(", ")
+
+                fun fromName(name: String): Category? {
+                    return values().firstOrNull { it.category == name }
+                }
+            }
+        }
+
+        object Validator {
+            fun validateWord(word: String): Boolean {
+                return word.all { char -> char.isLetter() || char == ' ' }
+            }
+        }
+    }
+
+  learner_created: false
+- name: src/mealplanner/Menu.kt
+  visible: true
+  text: |+
+    package mealplanner
+
+    object Menu {
+
+            private val meals: MutableList<Meal> = mutableListOf()
+
+            fun addMealFromInput(){
+                meals.add(UI.addMealFromInput())
+            }
+
+            fun printMenu() {
+                UI.printMenu(meals)
+            }
+        }
+
+
+  learner_created: false
+- name: src/mealplanner/UI.kt
+  visible: true
+  text: |-
+    package mealplanner
+
+    object UI {
+
+        private val commandMenuString = "What would you like to do (${Command.commandsString})?"
+        private val addMenuString = "Which meal do you want to add (${Meal.Category.categoriesString})?"
+        private val invalidCategory = "Wrong meal category! Choose from: ${Meal.Category.categoriesString}."
+        private const val invalidFormat = "Wrong format. Use letters only!"
+        private const val queryMealsName = "mealplanner.Meal's name:"
+        private const val queryIngredients = "Ingredients:"
+        private const val addSucceeded = "mealplanner.Meal added!"
+        private const val noMealsSaved = "No meals saved. Add meal first."
+        private const val invalidCommand = "Invalid command, try again"
+        private const val bye = "Bye!"
+        private const val invalidStringDefault = "1"
+
+
+        fun start() {
+            while(true) {
+                Command.NEXT.execute()
+            }
+        }
+
+        fun addMealFromInput(): Meal {
+            println(addMenuString)
+            val category = queryMealCategory()
+
+            println(queryMealsName)
+            val name = queryMealName()
+
+            println(queryIngredients)
+            val ingredients = queryMealIngredients()
+
+            println(addSucceeded)
+            return Meal(category, name, ingredients)
+        }
+
+        private fun queryMealCategory(): Meal.Category {
+            //println(addMenuString)
+            val category = Meal.Category.fromName(
+                    readLine() ?: invalidStringDefault
+            )
+
+            if(category == null) {
+                println(invalidCategory)
+                return queryMealCategory()
+            }
+            return category
+        }
+
+        private fun queryMealName(): String {
+            //println(queryMealsName)
+            val name = readLine() ?: invalidStringDefault
+            if(!Meal.Validator.validateWord(name)) {
+                println(invalidFormat)
+                return queryMealName()
+            }
+            return name
+        }
+
+        private fun queryMealIngredients(): List<String> {
+            //println(queryIngredients)
+            val ingredients:List<String> = (readLine() ?: invalidStringDefault).split(", ")
+                    .map(String::trim)
+                    .toList()
+            if(ingredients.any { ingredient -> !Meal.Validator.validateWord(ingredient) }) {
+                println(invalidFormat)
+                return queryMealIngredients()
+
+            }
+            return ingredients
+        }
+
+        fun printMenu(meals: List<Meal>) {
+            meals.apply{
+                if(isEmpty()) {
+                    println(noMealsSaved)
+                } else {
+                    meals.forEach(::println)
+                }
+            }
+        }
+
+        fun nextCommand() {
+            println(commandMenuString)
+            val commandStr = readLine() ?: invalidStringDefault
+            Command.fromName(commandStr).execute()
+
+        }
+
+        fun tryAgain() {
+            println(invalidCommand)
+
+        }
+
+        enum class Command(private val runnable: Runnable) {
+            ADD(Menu::addMealFromInput), SHOW(Menu::printMenu),
+            NEXT(UI::nextCommand), TRY_AGAIN(UI::tryAgain),
+            EXIT( {  -> println(bye); kotlin.system.exitProcess(0) } );
+
+
+            fun execute()   {
+                runnable.run()
+            }
+
+            companion object {
+
+                val commandsString = values()
+                        .filter { it !in listOf(TRY_AGAIN, NEXT)}
+                        //.filter { it != TRY_AGAIN && it != NEXT}
+                        .joinToString(", ") { it.name.toLowerCase() }
+
+                fun fromName(name: String): Command {
+                    return Command.values().firstOrNull(){ it.name.equals(name, ignoreCase = true)} ?: TRY_AGAIN
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: test/KotlinTest.java
+  visible: false
+  text: |-
+    import org.hyperskill.hstest.stage.StageTest;
+
+    public abstract class KotlinTest<T> extends StageTest<T> {
+
+    }
+  learner_created: false
+- name: test/MealPlannerTest.kt
+  visible: false
+  text: |-
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod
+    import org.hyperskill.hstest.testcase.CheckResult
+    import org.hyperskill.hstest.testing.TestedProgram
+    import java.io.File
+    import java.lang.IndexOutOfBoundsException
+
+    class MealPlannerTest() : KotlinTest<String>() {
+
+        private val dbName = "test.db"
+        @DynamicTestingMethod
+        open fun test(): CheckResult? {
+            val main = TestedProgram()
+
+            main.start(dbName)
+            main.execute("show")
+            val output = main.execute("lunch")
+
+
+            if (output != "No meals found.\n" +
+                    "What would you like to do (add, show, exit)?\n") {
+                return CheckResult.wrong("Wrong answer on \"show\" command.")
+            }
+            return CheckResult.correct()
+        }
+
+
+        @DynamicTestingMethod
+        open fun test2(): CheckResult? {
+
+
+            val main = TestedProgram()
+
+            main.start(dbName)
+            main.execute("add")
+            main.execute("breakfast")
+            main.execute("abracadabra")
+            val output = main.execute("eggs, salmon, broccoli, cheese")
+
+
+
+            main.execute("add")
+            main.execute("lunch")
+            main.execute("hawaii")
+            val output2 = main.execute("pineapple, flowers")
+
+            if (output2 != "Meal added!\nWhat would you like to do (add, show, exit)?\n") {
+                return CheckResult.wrong("Wrong command ending.")
+            }
+            main.execute("exit")
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTestingMethod
+        open fun test3(): CheckResult? {
+            val main = TestedProgram()
+
+            main.start(dbName)
+            main.execute("show")
+            val output = main.execute("dessert")
+
+            if (output != "Wrong meal category! Choose from: breakfast, lunch, dinner.\n") {
+                return CheckResult.wrong("Wrong answer on  \"show\" command.")
+            }
+
+            val output1 = main.execute("breakfast").split("\n").reversed()
+
+            if (output1.isEmpty()) {
+                return CheckResult.wrong("Database didn't persist data before program terminating.")
+            }
+
+            var isOk = true
+
+            try {
+                if (output1[2] != "cheese" || output1[3] != "broccoli"
+                    || output1[4] != "salmon" || output1[5] != "eggs") {
+                    isOk = false
+                }
+                if (output1[7] != "Name: abracadabra") {
+                    isOk = false
+                }
+            } catch (ex: IndexOutOfBoundsException) {
+                isOk = false
+            }
+
+            if(!isOk) {
+                return CheckResult.wrong("Wrong answer on the first \"show\" command.")
+            }
+
+            main.execute("show")
+            val output3 = main.execute("lunch").split("\n").reversed()
+
+            isOk = true
+
+            try {
+                if (output3[2] != "flowers" || output3[3] != "pineapple") {
+                    isOk = false
+                }
+                if (output3[5] != "Name: hawaii") {
+                    isOk = false
+                }
+            } catch (ex: IndexOutOfBoundsException) {
+                isOk = false
+            }
+
+            if(!isOk) {
+                return CheckResult.wrong("Wrong answer on the second \"show\" command.")
+            }
+
+            main.execute("exit")
+            main.stop()
+
+            val file = File(dbName)
+            file.delete()
+
+            return CheckResult.correct()
+        }
+
+    }
+  learner_created: false
+- name: src/mealplanner/database/DbService.kt
+  visible: true
+  text: |-
+    package mealplanner.database
+
+    import com.squareup.sqldelight.db.SqlDriver
+    import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+    import mealdb.data.IngredientsDaoQueries
+    import mealdb.data.MealDao
+    import mealdb.data.MealDaoQueries
+    import mealplanner.Database
+    import mealplanner.Meal
+    import mealplanner.Menu
+
+
+    class DbService private constructor(private val databaseName: String) {
+
+        private val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$databaseName")
+
+        init {
+            Database.Schema.create(driver)
+        }
+
+        private val database = Database(driver)
+        private val mealDaoQueries: MealDaoQueries = database.mealDaoQueries
+        private val ingredientsDaoQueries: IngredientsDaoQueries = database.ingredientsDaoQueries
+
+
+        fun insertIngredient(ingredient: String, meal: Meal) {
+
+            val mealDao = mealDaoQueries.findMealDao(meal.name, meal.category.type)
+                    .executeAsOneOrNull()
+            mealDao?.also { dao ->
+                ingredientsDaoQueries.insert(ingredient, dao.meal_id)
+            }
+        }
+
+        fun insertIngredient(ingredient: String, mealDao: MealDao) {
+            ingredientsDaoQueries.insert(ingredient, mealDao.meal_id)
+        }
+
+        fun insertMeal(meal: Meal) {
+            val foundMealDao = mealDaoQueries.findMealDao(meal.name, meal.category.type)
+                    .executeAsOneOrNull()
+
+            if (foundMealDao == null) {
+                mealDaoQueries.insert(meal.category.type, meal.name)
+                val createdMealDao = mealDaoQueries.findMealDao(meal.name, meal.category.type)
+                        .executeAsOne()
+                meal.ingredients.forEach { ingred ->
+                    insertIngredient(ingred, createdMealDao)
+                }
+            } else {
+                meal.ingredients.forEach { ingred ->
+                    insertIngredient(ingred, foundMealDao)
+                }
+            }
+        }
+
+        fun initMenu() {
+            val listMealDao = mealDaoQueries.selectAll().executeAsList()
+            listMealDao.forEach { mealDao ->
+                val ingredientsList =
+                        ingredientsDaoQueries.allIngredientsWithMealId(mealDao.meal_id)
+                                .executeAsList()
+                                .map { ingredientsDao -> ingredientsDao.ingredient }
+
+                val category = Meal.Category.fromName(mealDao.category)
+                        ?: throw error("initMenu error, invalid meal category stored on database")
+
+                val meal = Meal(category, mealDao.meal, ingredientsList)
+
+                Menu.addMeal(meal);
+            }
+
+        }
+
+        fun close() {
+            driver.close()
+        }
+
+        companion object {
+            var singletonInstance:  DbService? = null;
+
+
+            fun getDbServiceInstance(dbName: String): DbService {
+                if (singletonInstance == null) {
+                    singletonInstance  =  DbService(dbName)
+                    return singletonInstance as DbService
+                }
+
+                return singletonInstance as DbService
+            }
+        }
+    }
+  learner_created: true
+- name: src/main/sqldelight/mealdb/data/MealDao.sq
+  visible: true
+  text: |+
+    selectAll:
+    SELECT *
+    FROM mealDao;
+
+    insert:
+    INSERT INTO mealDao(category, meal)
+    VALUES (?, ?);
+
+    findIdByName:
+    SELECT meal_id FROM mealDao
+    WHERE meal = (?);
+
+    findMealDao:
+    SELECT * FROM mealDao
+    WHERE meal = (?) AND category = (?);
+
+
+
+
+
+    -- CREATE TABLE mealDao (
+    --   meal_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    --   category TEXT NOT NULL,
+    --   meal TEXT NOT NULL
+    -- );
+
+
+
+  learner_created: true
+- name: src/main/sqldelight/mealdb/data/IngredientsDao.sq
+  visible: true
+  text: |-
+    selectAll:
+    SELECT *
+    FROM ingredientsDao;
+
+    insert:
+    INSERT INTO ingredientsDao(ingredient, meal_id)
+    VALUES (?, ?);
+
+    allIngredientsWithMealId:
+    SELECT *
+    FROM ingredientsDao
+    WHERE meal_id = (?);
+  learner_created: true
+- name: src/main/sqldelight/mealdb/data/CreateTables.sq
+  visible: true
+  text: |+
+    CREATE TABLE IF NOT EXISTS mealDao (
+      meal_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      category TEXT NOT NULL,
+      meal TEXT NOT NULL
+    );
+
+
+    CREATE TABLE IF NOT EXISTS ingredientsDao (
+      ingredient_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      ingredient TEXT NOT NULL,
+      meal_id INTEGER NOT NULL
+    );
+
+
+
+
+
+
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/129/stages/691/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 23 Feb 2021 21:20:41 UTC
+record: 4

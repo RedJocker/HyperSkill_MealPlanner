@@ -1,0 +1,233 @@
+[1;31m
+Start test 1[0m
+9What would you like to do (add, show, plan, save, exit)?
+> show
+AWhich category do you want to print? (breakfast, lunch, dinner)?
+> lunch
+No meals found.
+9What would you like to do (add, show, plan, save, exit)?
+[1;31m
+Start test 2[0m
+9What would you like to do (add, show, plan, save, exit)?
+> save
+Write a filename:
+> testFile.txt
++Save isn't allowed. Plan your meals first.
+9What would you like to do (add, show, plan, save, exit)?
+[1;31m
+Start test 3[0m
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+> breakfast
+Meal's name:
+> cat
+Ingredients:
+> bread, peanut butter, jelly
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+> breakfast
+Meal's name:
+> ara
+Ingredients:
+> tomato, cheese, bread
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+> breakfast
+Meal's name:
+> zebra
+Ingredients:
+> muesli, milk, nuts
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+> lunch
+Meal's name:
+> dog
+Ingredients:
+> ketchup, sausage
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+> lunch
+Meal's name:
+> mouse
+Ingredients:
+> fish, potato
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> add
+:Which meal do you want to add (breakfast, lunch, dinner)?
+	> dinner
+Meal's name:
+> lion
+Ingredients:
+> carmel, nuts, cream
+Meal added!
+9What would you like to do (add, show, plan, save, exit)?
+> plan
+Monday
+cat
+ara
+zebra
+1Choose breakfast for Monday from the list above:
+> ara
+'Yeah! We planned the meals for Monday.
+dog
+mouse
+-Choose lunch for Monday from the list above:
+> dog
+'Yeah! We planned the meals for Monday.
+lion
+.Choose dinner for Monday from the list above:
+> lion
+'Yeah! We planned the meals for Monday.
+Tuesday
+cat
+ara
+zebra
+2Choose breakfast for Tuesday from the list above:
+	> parrot
+>This meal doesn’t exist. Choose a meal from the list above.
+> zebra
+(Yeah! We planned the meals for Tuesday.
+dog
+mouse
+.Choose lunch for Tuesday from the list above:
+> mouse
+(Yeah! We planned the meals for Tuesday.
+lion
+/Choose dinner for Tuesday from the list above:
+> lion
+(Yeah! We planned the meals for Tuesday.
+
+Wednesday
+cat
+ara
+zebra
+4Choose breakfast for Wednesday from the list above:
+> zebra
+*Yeah! We planned the meals for Wednesday.
+dog
+mouse
+0Choose lunch for Wednesday from the list above:
+> mouse
+*Yeah! We planned the meals for Wednesday.
+lion
+1Choose dinner for Wednesday from the list above:
+> lion
+*Yeah! We planned the meals for Wednesday.
+	Thursday
+cat
+ara
+zebra
+3Choose breakfast for Thursday from the list above:
+> zebra
+)Yeah! We planned the meals for Thursday.
+dog
+mouse
+/Choose lunch for Thursday from the list above:
+> mouse
+)Yeah! We planned the meals for Thursday.
+lion
+0Choose dinner for Thursday from the list above:
+> lion
+)Yeah! We planned the meals for Thursday.
+Friday
+cat
+ara
+zebra
+1Choose breakfast for Friday from the list above:
+> zebra
+'Yeah! We planned the meals for Friday.
+dog
+mouse
+-Choose lunch for Friday from the list above:
+> mouse
+'Yeah! We planned the meals for Friday.
+lion
+.Choose dinner for Friday from the list above:
+> lion
+'Yeah! We planned the meals for Friday.
+	Saturday
+cat
+ara
+zebra
+3Choose breakfast for Saturday from the list above:
+> zebra
+)Yeah! We planned the meals for Saturday.
+dog
+mouse
+/Choose lunch for Saturday from the list above:
+> mouse
+)Yeah! We planned the meals for Saturday.
+lion
+0Choose dinner for Saturday from the list above:
+> lion
+)Yeah! We planned the meals for Saturday.
+Sunday
+cat
+ara
+zebra
+1Choose breakfast for Sunday from the list above:
+> zebra
+'Yeah! We planned the meals for Sunday.
+dog
+mouse
+-Choose lunch for Sunday from the list above:
+> mouse
+'Yeah! We planned the meals for Sunday.
+lion
+.Choose dinner for Sunday from the list above:
+> lion
+'Yeah! We planned the meals for Sunday.
+Monday
+Breakfast: ara
+Lunch: dog
+Dinner: lion
+
+Tuesday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+
+Wednesday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+	Thursday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+Friday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+	Saturday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+Sunday
+Breakfast: zebra
+Lunch: mouse
+Dinner: lion
+
+9What would you like to do (add, show, plan, save, exit)?
+> save
+Write a filename:
+> testFile.txt
+Saved correctly!
+9What would you like to do (add, show, plan, save, exit)?
+> exit
+Bye!

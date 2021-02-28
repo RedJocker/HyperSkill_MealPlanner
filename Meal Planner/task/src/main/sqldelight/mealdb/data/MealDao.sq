@@ -1,0 +1,28 @@
+selectAll:
+SELECT *
+FROM mealDao;
+
+insert:
+INSERT INTO mealDao(category, meal)
+VALUES (?, ?);
+
+findIdByName:
+SELECT meal_id FROM mealDao
+WHERE meal = (?);
+
+findMealDao:
+SELECT * FROM mealDao
+WHERE meal = (?) AND category = (?);
+
+
+
+
+
+-- CREATE TABLE mealDao (
+--   meal_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+--   category TEXT NOT NULL,
+--   meal TEXT NOT NULL
+-- );
+
+
+

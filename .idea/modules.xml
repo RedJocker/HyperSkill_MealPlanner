@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Meal_Planner.iml" filepath="$PROJECT_DIR$/.idea/modules/Meal_Planner.iml" group="Meal_Planner" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task.iml" filepath="$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task.iml" group="Meal_Planner/Meal_Planner-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task_main.iml" group="Meal_Planner/Meal_Planner-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Meal Planner/task/Meal_Planner-task_test.iml" group="Meal_Planner/Meal_Planner-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util.iml" group="Meal_Planner/util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_main.iml" group="Meal_Planner/util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_test.iml" group="Meal_Planner/util" />
+    </modules>
+  </component>
+</project>

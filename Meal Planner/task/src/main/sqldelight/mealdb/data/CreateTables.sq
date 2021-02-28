@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS mealDao (
+  meal_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  category TEXT NOT NULL,
+  meal TEXT NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS ingredientsDao (
+  ingredient_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  ingredient TEXT NOT NULL,
+  meal_id INTEGER NOT NULL
+);
+
+
+
+
+
+

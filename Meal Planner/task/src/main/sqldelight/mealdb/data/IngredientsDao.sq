@@ -1,0 +1,12 @@
+selectAll:
+SELECT *
+FROM ingredientsDao;
+
+insert:
+INSERT INTO ingredientsDao(ingredient, meal_id)
+VALUES (?, ?);
+
+allIngredientsWithMealId:
+SELECT *
+FROM ingredientsDao
+WHERE meal_id = (?);
